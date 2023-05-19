@@ -33,6 +33,7 @@ def order_create(request):
     template = 'orders/order_create.html'
     if not request.user.profile.is_customer:
         return redirect('orders:orders_list')
+
     if request.method == 'POST':
         form = OrderForm(request.POST, request.FILES)
         if form.is_valid():
@@ -92,6 +93,10 @@ def download(request, order_id=None, path=''):
 @login_required
 def orders_statistic(request):
     """Статистика по заказам."""
+    print(request.user, request.user.profile.is_manage)
+    if not request.user.profile.is_manage:
+        return redirect('orders:orders_list')
+
     template = 'orders/statistic.html'
     orders_count = Order.objects.count()
     status_count = Order.objects.values('status').annotate(

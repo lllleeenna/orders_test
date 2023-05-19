@@ -12,9 +12,11 @@
         <li class="nav-item">
           <a class="nav-link {% if view_name  == 'orders:orders_list' %}active{% endif %}" href="{% url 'orders:orders_list' %}">Список заказов</a>
         </li>
-      <li class="nav-item">
-        <a class="nav-link {% if view_name  == 'orders:orders_statistic' %}active{% endif %}" href="{% url 'orders:orders_statistic' %}">Статистика</a>
-      </li>
+        {% if request.user.profile.is_manage %}
+          <li class="nav-item">
+            <a class="nav-link {% if view_name  == 'orders:orders_statistic' %}active{% endif %}" href="{% url 'orders:orders_statistic' %}">Статистика</a>
+          </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link link-light {% if view_name  == 'account:logout' %}active{% endif %}" href="{% url 'account:logout' %}">Выйти</a>
         </li>
