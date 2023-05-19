@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+  Статистика
+{% endblock title%}
+
+{% block content %}
+  <div class="container py-5">
+    <h2>Количество заказов в категориях:</h2>
+    {% for c in status_count %}
+      <p>{{ c.status }}: {{ c.total }}</p>
+    {% endfor %}
+    Всего: {{ orders_count }}
+  </div>
+{% endblock content %}

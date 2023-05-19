@@ -1,0 +1,35 @@
+{% load static %}
+<nav class="navbar navbar-light" style="background-color: lightskyblue">
+  <div class="container">
+    {% with request.resolver_match.view_name as view_name %}
+    <ul class="nav nav-pills">
+      {% if request.user.is_authenticated %}
+        {% if request.user.profile.is_customer %}
+          <li class="nav-item">
+            <a class="nav-link {% if view_name  == 'orders:order_create' %}active{% endif %}" href="{% url 'orders:order_create' %}">Создать заказ</a>
+          </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'orders:orders_list' %}active{% endif %}" href="{% url 'orders:orders_list' %}">Список заказов</a>
+        </li>
+      <li class="nav-item">
+        <a class="nav-link {% if view_name  == 'orders:orders_statistic' %}active{% endif %}" href="{% url 'orders:orders_statistic' %}">Статистика</a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link link-light {% if view_name  == 'account:logout' %}active{% endif %}" href="{% url 'account:logout' %}">Выйти</a>
+        </li>
+        <li>
+          Пользователь: {{ user.username }}
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link link-light {% if view_name  == 'account:login' %}active{% endif %}" href="{% url 'account:login' %}">Войти</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light {% if view_name  == 'account:signup' %}active{% endif %}" href="{% url 'account:signup' %}">Регистрация</a>
+        </li>
+      {% endif %}
+    </ul>
+    {% endwith %}
+  </div>
+</nav>

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title%}
+  Список заказов
+{% endblock title%}
+{% block content %}
+  <div class="container py-5">
+    <h2>Список заказов</h2>
+    {% if request.user.is_authenticated %}
+      <table class="table-bordered">
+        <tr>
+          <th>Имя</th>
+          <th>Дата рождения</th>
+          <th>Заказ</th>
+          <th>Документ</th>
+          <th>Статус заказа</th>
+        </tr>
+    {% else %}
+      <p>Для просмотра списка заказов, войдите в свою учетную запись</p>
+    {% endif %}
+
+        {% for order in orders %}
+        <tr>
+          <th>
+            {{ order.customer.get_full_name }}
+          </th>
+            <th>
+              {{ order.customer.profile.date_of_birth }}
+            </th>
+          <th>
+            {{ order.text|truncatechars:30 }}
+          </th>
+          <th>
+            <a href="{{ order.file }}">Документ</a>
+          </th>
+          <th>
+            {{ order.status }}
+          </th>
+          <th>
+            <a href="{% url 'orders:order_detail' order.pk %}">Посмотреть заказ</a>
+          </th>
+        </tr>
+        {% endfor %}
+
+      </table>
+  </div>
+{% endblock content %}
